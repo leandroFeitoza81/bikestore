@@ -79,3 +79,9 @@ BikeStore.Domain/obj/
 BikeStore.Infrastructure/obj/
 
 BikeStore.Application/obj/
+
+src/BikeStore.Application/obj/
+
+src/BikeStore.Domain/obj/
+
+src/BikeStore.infra/obj/
