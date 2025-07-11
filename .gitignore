@@ -69,3 +69,13 @@ build.log
 # Visual Studio Log Files
 *.log
 
+
+.idea/
+
+src/BikeStore.Web/obj/
+
+BikeStore.Domain/obj/
+
+BikeStore.Infrastructure/obj/
+
+BikeStore.Application/obj/
