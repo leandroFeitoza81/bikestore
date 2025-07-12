@@ -1,0 +1,27 @@
+
+
+@model List<BikeStore.Web.ViewModels.ProductViewModel>
+
+<h2>Lista de Produtos</h2>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Nome</th>
+        <th>Preço</th>
+        <th>Marca</th>
+        <th>Categoria</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var product in Model)
+    {
+        <tr>
+            <td>@product.Name</td>
+            <td>@product.Price</td>
+            <td>@product.BrandName</td>
+            <td>@product.CategoryName</td>
+        </tr>
+    }
+    </tbody>
+</table>

@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BikeStore.Application\BikeStore.Application.csproj" />
     <ProjectReference Include="..\BikeStore.Domain\BikeStore.Domain.csproj" />
     <ProjectReference Include="..\BikeStore.infra\BikeStore.Infra.csproj" />
   </ItemGroup>
