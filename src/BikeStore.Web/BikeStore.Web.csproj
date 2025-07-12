@@ -4,6 +4,22 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>89ABAFBC-5E6B-4E64-AF1F-FFE28BCCA3A5</UserSecretsId>
   </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BikeStore.Application\BikeStore.Application.csproj" />
+    <ProjectReference Include="..\BikeStore.Domain\BikeStore.Domain.csproj" />
+    <ProjectReference Include="..\BikeStore.infra\BikeStore.Infra.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
+    <Folder Include="Views\Home\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="9.0.0" />
+  </ItemGroup>
 
 </Project>
