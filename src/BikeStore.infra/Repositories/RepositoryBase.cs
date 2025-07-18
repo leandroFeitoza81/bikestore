@@ -7,7 +7,7 @@ namespace BikeStore.Infra.Repositories;
 
 public abstract class RepositoryBase<TModel>(string connectionString)
 {
-    
+
     private SqlConnection connection;
     private async Task<SqlConnection> GetConnectionAsync()
     {
@@ -62,6 +62,44 @@ public abstract class RepositoryBase<TModel>(string connectionString)
         {
             //TODO
             // Implantar log
+            throw;
+        }
+    }
+    
+    protected async Task<T?> ExecuteQueryFirstOrDefaultAsync<T>(string query,
+        Dictionary<string, object>? parameters = null) where T : class
+    {
+        await EnsureConnectionOpened();
+        
+        T? result = null;
+        
+        try
+        {
+            await using var command = connection.CreateCommand();
+            command.CommandText = query;
+            
+            if (parameters != null)
+            {
+                foreach (var parameter in parameters)
+                {
+                    command.Parameters.Add(new SqlParameter(parameter.Key, parameter.Value));
+                }
+            }
+            await using var reader = await command.ExecuteReaderAsync();
+            while (await reader.ReadAsync())
+            {
+                result = MapProductWithDetail(reader) as T;
+            }
+
+            return result;
+            
+        }
+        catch (SqlException ex)
+        {
+            throw new DataBaseException("Erro ao acessar os dados.", ex);
+        }
+        catch (Exception ex)
+        {
             throw;
         }
     }

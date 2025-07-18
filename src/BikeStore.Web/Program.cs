@@ -4,6 +4,7 @@ using BikeStore.Infra.Repositories;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddRazorPages();
 
 builder.Services.AddScoped<IProductRepository>(sp =>
 {
@@ -13,10 +14,13 @@ builder.Services.AddScoped<IProductRepository>(sp =>
 
 var app = builder.Build();
 
+app.UseStaticFiles();
+
 app.MapControllerRoute(
-    name: default,
+    name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}"
-    )
-    .WithStaticAssets();
+);
+
+app.MapRazorPages();
 
 app.Run();

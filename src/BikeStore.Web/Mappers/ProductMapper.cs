@@ -12,12 +12,14 @@ public static class ProductMapper
         {
             Id = product.ProductId,
             Name = product.ProductName,
-            Price = product.Price.ToString("C", new CultureInfo("pt-Br")),
+            Price = product.Price.ToString("C", new CultureInfo("en-US")),
             BrandName = product.Brand.BrandName,
             CategoryName = product.Category.CategoryName
         };
     }
     
-    public static List<ProductViewModel> ToViewModelList(this IEnumerable<Product> products) =>
+    public static List<ProductViewModel> ToViewModelProductList(this IEnumerable<Product> products) =>
         products.Select(ToViewModel).ToList();
+    
+    public static ProductViewModel ToViewModelProduct(this Product product) => product.ToViewModel();
 }

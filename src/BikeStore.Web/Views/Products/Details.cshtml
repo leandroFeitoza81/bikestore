@@ -1,0 +1,28 @@
+@model BikeStore.Web.ViewModels.ProductViewModel
+
+@{
+    ViewBag.Title = "title";
+}
+
+<h2>title</h2>
+
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th scope="col">Nome</th>
+        <th scope="col">Preço</th>
+        <th scope="col">Marca</th>
+        <th scope="col">Categoria</th>
+    </tr>
+    </thead>
+    <tbody>
+
+        <tr>
+            <td>@Model.Name</td>
+            <td>@Model.Price</td>
+            <td>@Model.BrandName</td>
+            <td>@Model.CategoryName</td>
+        </tr>
+    
+    </tbody>
+</table>

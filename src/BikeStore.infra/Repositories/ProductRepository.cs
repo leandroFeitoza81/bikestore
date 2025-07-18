@@ -28,9 +28,18 @@ public class ProductRepository(string connectionString)
       
     }
 
-    public Task<Product> GetById(int id)
+    public async Task<Product> GetById(int id)
     {
-        throw new NotImplementedException();
+        var parameterId = new Dictionary<string, object>
+        {
+            { "@ProductId", id }
+        };
+        
+        var product =
+            await ExecuteQueryFirstOrDefaultAsync<Product>(ProductQueries.GetProductByIdQuery,
+                parameterId);
+        
+        return product;
     }
 
     public Task Add(Product product)

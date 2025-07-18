@@ -9,9 +9,18 @@ namespace BikeStore.Web.Controllers
         public async Task<ActionResult> Index()
         {
             var products = await productRepository.GetAll();
-            var viewModels = products.ToViewModelList();
+            var viewModels = products.ToViewModelProductList();
             
             return View(viewModels);
+        }
+
+        public async Task<ActionResult> Details(int id)
+        {
+            var product = await productRepository.GetById(id);
+            
+            var viewModel = product.ToViewModelProduct();
+            
+            return View(viewModel);
         }
 
     }
