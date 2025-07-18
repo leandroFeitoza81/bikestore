@@ -6,18 +6,18 @@ namespace BikeStore.Web.Mappers;
 
 public static class ProductMapper
 {
-    private static ProductViewModel ToViewModel(Product product)
+    private static ProductViewModel ToViewModel(this Product product)
     {
         return new ProductViewModel()
         {
             Id = product.ProductId,
             Name = product.ProductName,
             Price = product.Price.ToString("C", new CultureInfo("pt-Br")),
-            BrandName = product.BrandId.ToString(),
-            CategoryName = product.CategoryId.ToString()
+            BrandName = product.Brand.BrandName,
+            CategoryName = product.Category.CategoryName
         };
     }
     
-    public static List<ProductViewModel> ToViewModelList(IEnumerable<Product> products) =>
+    public static List<ProductViewModel> ToViewModelList(this IEnumerable<Product> products) =>
         products.Select(ToViewModel).ToList();
 }
