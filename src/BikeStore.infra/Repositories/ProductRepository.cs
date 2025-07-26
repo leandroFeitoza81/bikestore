@@ -31,7 +31,7 @@ public class ProductRepository(string connectionString) : RepositoryBase(connect
             ProductQueries.GetProductByIdQuery, _productMapper, parameterId);
     }
 
-    public async Task<Product> Add(Product product)
+    public async Task<bool> Add(Product product)
     {
         var parameter = new Dictionary<string, object>
         {
@@ -42,29 +42,28 @@ public class ProductRepository(string connectionString) : RepositoryBase(connect
             { "@CategoryId", product.CategoryId }
         };
         
-        var newId = await ExecuteInsertAsync(
+        var result = await ExecuteInsertAsync(
             ProductQueries.AddProductQuery, parameter);
-        
-        return new Product()
-        {
-            ProductId = newId
-        };
+
+        return result > 0;
     }
 
-    public async Task<int> Update(Product product)
+    public async Task<bool> Update(Product product)
     {
         var parameter = new Dictionary<string, object>
         {
             { "@ProductId", product.ProductId },
             { "@ProductName", product.ProductName },
-            { "@ListPrice", product.Price },
+            { "@Price", product.Price },
             { "@ModelYear", product.ModelYear },
-            { "@BrandId", product.Brand.BrandId },
-            { "@CategoryId", product.Category.CategoryId }
+            { "@BrandId", product.BrandId },
+            { "@CategoryId", product.CategoryId }
         };
 
-        return await ExecuteUpdateAsync(
+        var result = await ExecuteUpdateAsync(
             ProductQueries.AddProductQuery, parameter);
+        
+        return result > 0;
     }
 
     public Task<int> Delete(Product product)

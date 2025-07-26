@@ -8,10 +8,15 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BikeStore.Web.Controllers
 {
-    public class ProductsController(IProductRepository productRepository, IBrandService brandService, ICategoryService categoryService) : Controller
+    public class ProductsController(
+        IProductRepository productRepository,
+        IBrandService brandService, 
+        ICategoryService categoryService,
+        IProductService productService) : Controller
     {
         private readonly IBrandService _brandService = brandService;
         private readonly ICategoryService _categoryService = categoryService;
+        private readonly IProductService _productService = productService;
         
         public async Task<ActionResult> Index()
         {
@@ -50,18 +55,62 @@ namespace BikeStore.Web.Controllers
                 
                 var product = createProductViewModel.ToEntity();
                 var createdProduct = await productRepository.Add(product);
+                
+                if (!createdProduct)
+                    return View(createProductViewModel);
+                
+                return RedirectToAction("Index");
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
                 throw;
             }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var product = await _productService.GetProductByIdAsync(id);
+            if (product == null)
+                return NotFound();
+
+            var viewModel = product.ToEditViewModel();
+            await viewModel.PopulateDropdownAsync(_brandService, _categoryService);
             
-
-
-            return RedirectToAction("Details", new {id = 1});
+            return View(viewModel);
+            
         }
         
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(EditProductViewModel viewModel)
+        {
+            try
+            {
+                if (!ModelState.IsValid)
+                {
+                    await viewModel.PopulateDropdownAsync(_brandService, _categoryService);
+                    return View(viewModel);
+                }
+
+                var product = viewModel.ToEntity();
+                var result = await _productService.UpdateProductAsync(product);
+                
+                if (!result)
+                    return View(viewModel);
+                
+                TempData["message"] = "Product updated successfully!";
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("", "Ocorreu um erro ao atualizar o produto.");
+                await viewModel.PopulateDropdownAsync(_brandService, _categoryService);
+                return View(viewModel);
+            }
+        }
+
 
     }
 }

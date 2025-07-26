@@ -32,9 +32,18 @@ public class ProductServices : IProductService
         }).ToList();
     }
 
-    public async  Task<Product> CreateProductAsync(Product product)
+    public async  Task<bool> CreateProductAsync(Product product)
     {
-        var result = await _productRepository.Add(product);
-        return result;    
+        return await _productRepository.Add(product);
+    }
+
+    public async Task<Product?> GetProductByIdAsync(int id)
+    {
+        return await _productRepository.GetById(id);
+    }
+
+    public async Task<bool> UpdateProductAsync(Product product)
+    {
+        return await _productRepository.Update(product);
     }
 }

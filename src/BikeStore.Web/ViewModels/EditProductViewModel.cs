@@ -1,9 +1,10 @@
 using System.ComponentModel.DataAnnotations;
 using BikeStore.Web.ViewModels.Base;
-using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BikeStore.Web.ViewModels;
 
-public class CreateProductViewModel : ProductFormViewModel
+public class EditProductViewModel : ProductFormViewModel
 {
+    [Required]
+    public int Id { get; set; }
 }
