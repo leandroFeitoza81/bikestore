@@ -1,5 +1,6 @@
 using BikeStore.Application.DTOs;
 using BikeStore.Application.Services.Interfaces;
+using BikeStore.Domain.Entities;
 using BikeStore.Domain.Interfaces;
 
 namespace BikeStore.Application.Services;
@@ -15,7 +16,7 @@ public class ProductServices : IProductService
 
     public async Task<List<ProductDetailDto>> GetAllProductsDetailsAsync()
     {
-        var products = await _productRepository.GetAll();
+        var products = await _productRepository.GetAllProductAsync();
 
         if (products == null)
             return null;
@@ -29,5 +30,11 @@ public class ProductServices : IProductService
             BrandName = p.BrandId.ToString(),
             CategoryName = p.CategoryId.ToString()
         }).ToList();
+    }
+
+    public async  Task<Product> CreateProductAsync(Product product)
+    {
+        var result = await _productRepository.Add(product);
+        return result;    
     }
 }

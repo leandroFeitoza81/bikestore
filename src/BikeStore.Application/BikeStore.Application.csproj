@@ -10,4 +10,8 @@
     <ProjectReference Include="..\BikeStore.Domain\BikeStore.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Extensions\" />
+  </ItemGroup>
+
 </Project>

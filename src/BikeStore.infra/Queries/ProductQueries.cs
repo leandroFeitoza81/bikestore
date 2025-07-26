@@ -2,7 +2,7 @@ namespace BikeStore.Infra.Queries;
 
 public static class ProductQueries
 {
-    public const string GetProductsWithBrandAndCategoryQuery = 
+    public const string GetProductsWithBrandAndCategoryQuery =
         """
             SELECT 
                p.product_id AS ProductId,
@@ -17,8 +17,8 @@ public static class ProductQueries
                 INNER JOIN BikeStores.production.brands b 
                     ON b.brand_id = p.brand_id
         """;
-    
-    public const string GetProductByIdQuery = 
+
+    public const string GetProductByIdQuery =
         """
             SELECT 
                p.product_id AS ProductId,
@@ -33,6 +33,14 @@ public static class ProductQueries
                 INNER JOIN BikeStores.production.brands b 
                     ON b.brand_id = p.brand_id
             WHERE p.product_id = @ProductId
+        """;
+
+    public const string AddProductQuery =
+        """
+        INSERT INTO BikeStores.production.products
+        (product_name, brand_id, category_id, model_year, list_price)
+        VALUES(@ProductName, @BrandId, @CategoryId, @ModelYear, @Price);
+        SELECT CAST(SCOPE_IDENTITY() AS INT);
         """;
 
 }
