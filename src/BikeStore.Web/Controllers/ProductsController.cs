@@ -14,10 +14,6 @@ namespace BikeStore.Web.Controllers
         ICategoryService categoryService,
         IProductService productService) : Controller
     {
-        private readonly IBrandService _brandService = brandService;
-        private readonly ICategoryService _categoryService = categoryService;
-        private readonly IProductService _productService = productService;
-        
         public async Task<ActionResult> Index()
         {
             var products = await productRepository.GetAllProductAsync();
@@ -39,7 +35,7 @@ namespace BikeStore.Web.Controllers
         public async Task<IActionResult> Create()
         {
             var viewModel = new CreateProductViewModel();
-            await viewModel.PopulateDropdownAsync(_brandService, _categoryService);
+            await viewModel.PopulateDropdownAsync(brandService, categoryService);
             
             return View(viewModel);
         }
@@ -71,12 +67,12 @@ namespace BikeStore.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var product = await _productService.GetProductByIdAsync(id);
+            var product = await productService.GetProductByIdAsync(id);
             if (product == null)
                 return NotFound();
 
             var viewModel = product.ToEditViewModel();
-            await viewModel.PopulateDropdownAsync(_brandService, _categoryService);
+            await viewModel.PopulateDropdownAsync(brandService, categoryService);
             
             return View(viewModel);
             
@@ -90,12 +86,12 @@ namespace BikeStore.Web.Controllers
             {
                 if (!ModelState.IsValid)
                 {
-                    await viewModel.PopulateDropdownAsync(_brandService, _categoryService);
+                    await viewModel.PopulateDropdownAsync(brandService, categoryService);
                     return View(viewModel);
                 }
 
                 var product = viewModel.ToEntity();
-                var result = await _productService.UpdateProductAsync(product);
+                var result = await productService.UpdateProductAsync(product);
                 
                 if (!result)
                     return View(viewModel);
@@ -106,7 +102,7 @@ namespace BikeStore.Web.Controllers
             catch (Exception ex)
             {
                 ModelState.AddModelError("", "Ocorreu um erro ao atualizar o produto.");
-                await viewModel.PopulateDropdownAsync(_brandService, _categoryService);
+                await viewModel.PopulateDropdownAsync(brandService, categoryService);
                 return View(viewModel);
             }
         }

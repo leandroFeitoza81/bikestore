@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BikeStore - Home Page</title>
-    
+
 </head>
 <body>
 
@@ -18,10 +18,12 @@
                     <p class="hero-subtitle">
                         Sua loja completa de bicicletas com sistema de gerenciamento moderno e eficiente
                     </p>
-                    <button class="btn btn-hero btn-lg">
-                        <i class="fas fa-shopping-cart me-2"></i>
-                        Explorar Produtos
-                    </button>
+                    <a class="nav-link" asp-controller="Products" asp-action="Index">
+                        <button class="btn btn-hero btn-lg">
+                            <i class="fas fa-shopping-cart me-2"></i>
+                            Explorar Produtos
+                        </button>
+                    </a>
                 </div>
             </div>
             <div class="col-lg-6">
